@@ -23,7 +23,7 @@ resource "aws_instance" "cheap_worker_west" {
   ami           = "ami-000ce50ab0df5943f"
   provider = "aws.west"
   instance_type = "t2.micro"
-  availability_zone  = "us-west-1d"
+  availability_zone  = "us-west-2c"
   associate_public_ip_address = true
 
   tags {

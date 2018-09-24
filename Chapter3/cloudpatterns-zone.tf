@@ -1,6 +1,10 @@
-# cloudpatterns-zone in Route53
-resource "aws_route53_zone" "main" {
-  name = "cloudpatterns.uk"
+# grab the existing cloudpatterns-zone in Route53
+#resource "aws_route53_zone" "main" {
+#  name = "cloudpatterns.uk"
+#}
+
+data "aws_route53_zone" "main" {
+  name = "cloudpatterns.uk."
 }
 
 resource "aws_route53_zone" "book" {
@@ -12,7 +16,7 @@ resource "aws_route53_zone" "book" {
 }
 
 resource "aws_route53_record" "book-ns" {
-  zone_id = "${aws_route53_zone.main.zone_id}"
+  zone_id = "${data.aws_route53_zone.main.zone_id}"
   name    = "book.cloudpatterns.uk"
   type    = "NS"
   ttl     = "30"
