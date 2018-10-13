@@ -106,19 +106,19 @@ resource "aws_codebuild_project" "cloudpatterns-codebuild" {
 
   source {
     type            = "CODECOMMIT"
-    location        = "${aws_codecommit_repository.cloudpatterns.clone_url_http}"
+    location        = "${var.aws_codecommit_repository_url}"
     git_clone_depth = 1
   }
 
   vpc_config {
-    vpc_id = "${aws_vpc.mainvpc.id}"
+    vpc_id = "${var.vpc_id}"
 
     subnets = [
-      "${data.aws_subnet_ids.example.ids[0]}",
+      "${var.aws_subnet_ids}",
     ]
 
     security_group_ids = [
-      "${aws_default_security_group.default.id}",
+      "${var.default_security_group_id}",
     ]
   }
 
