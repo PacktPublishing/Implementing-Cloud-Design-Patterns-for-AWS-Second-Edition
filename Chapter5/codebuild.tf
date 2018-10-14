@@ -54,6 +54,13 @@ resource "aws_iam_role_policy" "cloudpatterns-codebuild" {
     {
       "Effect": "Allow",
       "Action": [
+        "codecommit:*"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
         "s3:*"
       ],
       "Resource": [
