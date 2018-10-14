@@ -1,5 +1,6 @@
 version: 0.1
 # adapted from https://github.com/cloudreach/awsloft-terraform-ci/blob/master/buildspec-dev.yml
+# and https://stackoverflow.com/questions/44005005/aws-codebuild-terraform-provider
 
 env:
   variables:
