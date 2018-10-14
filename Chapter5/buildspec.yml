@@ -15,7 +15,7 @@ phases:
   build:
     commands:
       - cd "$CODEBUILD_SRC_DIR"
-      - terraform plan -no-color
+      - terraform plan -no-color -out cloudpatterns.tfplan
 
   post_build:
     commands:
