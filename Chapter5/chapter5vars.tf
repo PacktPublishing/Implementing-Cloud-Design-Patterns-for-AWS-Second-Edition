@@ -7,7 +7,7 @@ variable "default_security_group_id" {
 }
 
 variable "aws_codecommit_repository_url" {
-  default = "https://git-codecommit.us-east-1.amazonaws.com/v1/repos/cloudpatternsrepo.git"
+  default = "https://git-codecommit.us-east-1.amazonaws.com/v1/repos/cloudpatternsrepo"
 }
 
 variable "aws_subnet_ids" {

@@ -80,12 +80,13 @@ resource "aws_codebuild_project" "cloudpatterns-codebuild" {
 
   artifacts {
     type = "S3"
-  }
-
-  cache {
-    type     = "S3"
     location = "${aws_s3_bucket.cloudpatterns-codebuild.bucket}"
   }
+
+/*  cache {
+    type     = "S3"
+    location = "${aws_s3_bucket.cloudpatterns-codebuild.bucket}"
+  } */
 
   environment {
     compute_type = "BUILD_GENERAL1_SMALL"
@@ -107,6 +108,7 @@ resource "aws_codebuild_project" "cloudpatterns-codebuild" {
   source {
     type            = "CODECOMMIT"
     location        = "${var.aws_codecommit_repository_url}"
+#   auth            = {type = "OAUTH"}
     git_clone_depth = 1
   }
 
