@@ -1,0 +1,30 @@
+version: 0.2
+# adapted from https://github.com/cloudreach/awsloft-terraform-ci/blob/master/buildspec-dev.yml
+# and https://stackoverflow.com/questions/44005005/aws-codebuild-terraform-provider
+
+env:
+  variables:
+    TF_VERSION: "0.11.8"
+phases:
+
+  install:
+    commands:
+      - cd /usr/bin
+      - curl -s -qL -o terraform.zip https://releases.hashicorp.com/terraform/0.11.8/terraform_0.11.8_linux_amd64.zip
+      - unzip -o terraform.zip
+
+  build:
+    commands:
+      - echo "changing directory to $CODEBUILD_SRC_DIR"
+      - cd $CODEBUILD_SRC_DIR/Chapter5/
+      - terraform init
+      - terraform plan -no-color -out cloudpatterns.tfplan
+
+  post_build:
+    commands:
+      - echo "terraform plan completed on `date`"
+
+
+artifacts:
+  files:
+    - '**/*'

@@ -93,17 +93,6 @@ resource "aws_codebuild_project" "cloudpatterns-codebuild" {
     compute_type = "BUILD_GENERAL1_SMALL"
     image        = "aws/codebuild/ubuntu-base:14.04"
     type         = "LINUX_CONTAINER"
-
-    environment_variable {
-      "name"  = "SOME_KEY1"
-      "value" = "SOME_VALUE1"
-    }
-
-    environment_variable {
-      "name"  = "SOME_KEY2"
-      "value" = "SOME_VALUE2"
-      "type"  = "PARAMETER_STORE"
-    }
   }
 
   source {

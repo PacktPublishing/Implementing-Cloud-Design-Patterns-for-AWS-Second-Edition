@@ -3,7 +3,7 @@ variable "vpc_id" {
 }
 
 variable "default_security_group_id" {
-  default = "sg-a94db7e3"
+  default = "sg-0e26af41562cd5e30"
 }
 
 variable "aws_codecommit_repository_url" {
@@ -11,5 +11,5 @@ variable "aws_codecommit_repository_url" {
 }
 
 variable "aws_subnet_ids" {
-  default = ["subnet-447dd623", "subnet-476f170d"]
+  default = ["subnet-0dd41fca106a50ecc"]
 }
