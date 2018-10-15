@@ -1,6 +1,10 @@
 resource "aws_s3_bucket" "cloudpatterns-codebuild" {
   bucket = "cloudpatterns-codebuild"
   acl    = "private"
+  
+  versioning {
+    enabled = true
+  }
 }
 
 data "aws_subnet_ids" "example" {
