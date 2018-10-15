@@ -11,6 +11,14 @@ resource "aws_iam_role" "iam_for_lambda" {
         "Service": "lambda.amazonaws.com"
       },
       "Effect": "Allow"
+    },
+    {
+      "Sid": "",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "cloudtrail.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
     }
   ]
 }
@@ -25,12 +33,27 @@ resource "aws_lambda_permission" "allow_bucket" {
   source_arn    = "${aws_s3_bucket.cloudpatterns-codebuild.arn}"
 }
 
-resource "aws_lambda_function" "cloudpatterns_terraform_lambda" {
+/* resource "aws_lambda_function" "cloudpatterns_terraform_lambda" {
   filename      = "cloudpatterns-terraform-function.zip"
   function_name = "cloudpatterns_terraform_lambda"
   role          = "${aws_iam_role.iam_for_lambda.arn}"
   handler       = "terraform.my_handler"
   runtime   = "python2.7"
+} */ 
+
+resource "aws_lambda_function" "cloudpatterns_terraform_lambda" {
+  filename         = "cloudpatterns_lambda.zip"
+  function_name    = "cloudpatterns_terraform_lambda"
+  role             = "${aws_iam_role.iam_for_lambda.arn}"
+  handler          = "terraform.handler"
+  runtime          = "python2.7"
+  source_code_hash = "${base64sha256(file("cloudpatterns_lambda.zip"))}"
+
+  environment {
+    variables = {
+      foo = "bar"
+    }
+  }
 }
 
 resource "aws_s3_bucket_notification" "bucket_notification" {

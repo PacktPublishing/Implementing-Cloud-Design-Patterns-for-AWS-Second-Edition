@@ -104,6 +104,7 @@ resource "aws_codebuild_project" "cloudpatterns-codebuild" {
     location        = "${var.aws_codecommit_repository_url}"
 #   auth            = {type = "OAUTH"}
     git_clone_depth = 1
+      buildspec = "sonarqube.yml"
   }
 
   vpc_config {
