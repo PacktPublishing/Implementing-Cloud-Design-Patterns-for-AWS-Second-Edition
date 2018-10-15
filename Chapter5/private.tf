@@ -10,7 +10,7 @@ resource "aws_eip" "natgw_eip" {
 
 resource "aws_nat_gateway" "cloudpatterns_nat_gw" {
   allocation_id = "${aws_eip.natgw_eip.id}"
-  subnet_id     = "${aws_subnet.cloudpatterns_private.id}"
+  subnet_id     = "${var.aws_public_subnet_id}"
 
 }
 

@@ -10,6 +10,10 @@ variable "aws_codecommit_repository_url" {
   default = "https://git-codecommit.us-east-1.amazonaws.com/v1/repos/cloudpatternsrepo"
 }
 
-variable "aws_subnet_ids" {
+variable "aws_build_subnet_id" {
   default = ["subnet-034a9e5e46cce777c"]
+}
+
+variable "aws_public_subnet_id" {
+  default = "subnet-476f170d"
 }

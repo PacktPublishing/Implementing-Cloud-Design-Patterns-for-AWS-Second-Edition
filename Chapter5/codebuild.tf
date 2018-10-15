@@ -106,7 +106,7 @@ resource "aws_codebuild_project" "cloudpatterns-codebuild" {
     vpc_id = "${var.vpc_id}"
 
     subnets = [
-      "${var.aws_subnet_ids}",
+      "${var.aws_build_subnet_id}",
     ]
 
     security_group_ids = [
