@@ -24,6 +24,11 @@ resource "aws_route_table" "nat_route_table" {
   
 }
 
+resource "aws_route_table_association" "a" {
+  subnet_id      = "${aws_subnet.cloudpatterns_private.id}"
+  route_table_id = "${aws_route_table.nat_route_table.id}"
+}
+
 resource "aws_security_group" "nat_security_group" {
   name        = "allow_all"
   description = "Allow all inbound traffic"
