@@ -10,14 +10,14 @@ phases:
   install:
     commands:
       - cd /usr/bin
-      - curl -s -qL -o terraform.zip https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip
+      - curl -s -qL -o terraform.zip https://releases.hashicorp.com/terraform/$TF_VERSION/terraform_$TF_VERSION_linux_amd64.zip
       - ls -al
       - unzip -o terraform.zip
 
   build:
     commands:
-      - echo "changing directory to ${CODEBUILD_SRC_DIR}"
-      - cd ${CODEBUILD_SRC_DIR}\Chapter5\
+      - echo "changing directory to $CODEBUILD_SRC_DIR"
+      - cd $CODEBUILD_SRC_DIR\Chapter5\
       - terraform init
       - terraform plan -no-color -out cloudpatterns.tfplan
 
