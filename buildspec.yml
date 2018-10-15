@@ -9,10 +9,7 @@ phases:
 
   install:
     commands:
-      - cd /usr/bin
-      - curl -s -qL -o terraform.zip https://releases.hashicorp.com/terraform/$TF_VERSION/terraform_$TF_VERSION_linux_amd64.zip
-      - ls -al
-      - unzip -o terraform.zip
+      - cd /usr/bin && curl -s -qL -o terraform.zip https://releases.hashicorp.com/terraform/$TF_VERSION/terraform_$TF_VERSION_linux_amd64.zip && unzip -o terraform.zip
 
   build:
     commands:
