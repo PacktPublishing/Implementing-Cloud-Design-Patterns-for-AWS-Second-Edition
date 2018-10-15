@@ -4,10 +4,9 @@ version: 0.2
 phases:
   install:
     commands:
-      - wget https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.0.3.778-linux.zip
-      - unzip sonar-scanner-cli-3.0.3.778-linux.zip
-      - export PATH=$PATH:./sonar-scanner-3.0.3.778-linux/bin/
+      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.2.0.1227-linux.zip
+      - unzip sonar-scanner-cli-3.2.0.1227-linux.zip
+      - export PATH=$PATH:./sonar-scanner-3.2.0.1227-linux/bin/
   build:
     commands:
-      - cd $CODEBUILD_SRC_DIR/Chapter5/
       - sonar-scanner -Dsonar.projectKey=cure51-gapes -Dsonar.organization=skibum55-github -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=b85ce42d96cc973761366dfbeeb8ede60cc0ab4f
