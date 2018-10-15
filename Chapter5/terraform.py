@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# adapted from https://github.com/FitnessKeeper/terraform-lambda
 
 import os
 import subprocess

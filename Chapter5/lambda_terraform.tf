@@ -10,25 +10,36 @@ resource "aws_iam_role" "iam_for_lambda" {
       "Principal": {
         "Service": "lambda.amazonaws.com"
       },
-      "Effect": "Allow",
-      "Sid": ""
+      "Effect": "Allow"
     }
   ]
 }
 EOF
 }
 
-resource "aws_lambda_function" "cloudpatterns_terraform_lambda" {
-  filename         = "lambda_function_payload.zip"
-  function_name    = "lambda_function_name"
-  role             = "${aws_iam_role.iam_for_lambda.arn}"
-  handler          = "exports.test"
-  source_code_hash = "${base64sha256(file("lambda_function_payload.zip"))}"
-  runtime          = "python2.7"
+resource "aws_lambda_permission" "allow_bucket" {
+  statement_id  = "AllowExecutionFromS3Bucket"
+  action        = "lambda:InvokeFunction"
+  function_name = "${aws_lambda_function.cloudpatterns_terraform_lambda.arn}"
+  principal     = "s3.amazonaws.com"
+  source_arn    = "${aws_s3_bucket.cloudpatterns-codebuild.arn}"
+}
 
-  environment {
-    variables = {
-      foo = "bar"
-    }
+resource "aws_lambda_function" "cloudpatterns_terraform_lambda" {
+  filename      = "cloudpatterns-terraform-function.zip"
+  function_name = "cloudpatterns_terraform_lambda"
+  role          = "${aws_iam_role.iam_for_lambda.arn}"
+  handler       = "terraform.my_handler"
+  runtime   = "python2.7"
+}
+
+resource "aws_s3_bucket_notification" "bucket_notification" {
+  bucket = "${aws_s3_bucket.cloudpatterns-codebuild.id}"
+
+  lambda_function {
+    lambda_function_arn = "${aws_lambda_function.cloudpatterns_terraform_lambda.arn}"
+    events              = ["s3:ObjectCreated:*"]
+#   filter_prefix       = "/"
+    filter_suffix       = ".tfplan"
   }
 }
