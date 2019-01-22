@@ -4,7 +4,7 @@ exports.handler = (event, context, callback) => {
     const request = event.Records[0].cf.request;
     const headers = request.headers;
 
-    if (request.uri !== '/experiment-pixel.jpg') {
+    if (request.uri !== '/index.html') {
         // do not process if this is not an A-B test request
         callback(null, request);
         return;
@@ -12,8 +12,8 @@ exports.handler = (event, context, callback) => {
 
     const cookieExperimentA = 'X-Experiment-Name=A';
     const cookieExperimentB = 'X-Experiment-Name=B';
-    const pathExperimentA = '/experiment-group/control-pixel.jpg';
-    const pathExperimentB = '/experiment-group/treatment-pixel.jpg';
+    const pathExperimentA = '/index.html';
+    const pathExperimentB = '/indexB.html';
 
     /*
      * Lambda at the Edge headers are array objects.
