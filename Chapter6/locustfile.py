@@ -10,10 +10,10 @@ class UserBehavior(TaskSet):
         self.logout()
 
     def login(self):
-        self.client.post("/wp-admin", {"username":"user", "password":"reading"})
+        self.client.post("/wp-admin", {"username":"user", "password":"fUQhOhtZLt4'"})
 
     def logout(self):
-        self.client.post("/logout", {"username":"user", "password":"reading"})
+        self.client.post("/logout", {"username":"user", "password":"fUQhOhtZLt4'"})
 
     @task(2)
     def index(self):
