@@ -1,6 +1,10 @@
 resource "aws_s3_bucket" "cloudpatterns-cloudfrontbucket" {
   bucket = "cloudpatterns-cloudfront"
-  acl = "private"
+  acl = "public-read"
+  
+  website {
+    index_document = "index.html"
+  }
 
   tags = {
     Name = "My cloudfront bucket"
@@ -8,7 +12,7 @@ resource "aws_s3_bucket" "cloudpatterns-cloudfrontbucket" {
 }
 
 resource "aws_s3_bucket_object" "helloA" {
-    bucket = "cloudpatterns-cloudfront"
+    bucket = "${aws_s3_bucket.cloudpatterns-cloudfrontbucket.bucket}"
     key = "index.html"
     content = "Hello world from Terraform!"
     content_type = "text/plain"
@@ -16,42 +20,26 @@ resource "aws_s3_bucket_object" "helloA" {
 }
 
 resource "aws_s3_bucket_object" "helloB" {
-    bucket = "cloudpatterns-cloudfront"
+    bucket = "${aws_s3_bucket.cloudpatterns-cloudfrontbucket.bucket}"
     key = "indexB.html"
     content = "Hello world from TerraformB!"
     content_type = "text/plain"
     acl = "public-read"
 }
 
-locals {
-  s3_origin_id = "cloudpatterns-cloudfront"
-}
-
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
-    domain_name = "${aws_s3_bucket.cloudpatterns-cloudfrontbucket.bucket_regional_domain_name}"
-    origin_id = "${local.s3_origin_id}"
-
-    s3_origin_config {
-      origin_access_identity = "origin-access-identity/cloudfront/ABCDEFG1234567"
-    }
+    domain_name = "${aws_s3_bucket.cloudpatterns-cloudfrontbucket.bucket_domain_name}"
+    origin_id = "cloudpatterns-cloudfront"
   }
 
   enabled = true
   default_root_object = "index.html"
 
-  logging_config {
-    include_cookies = false
-    bucket = "mylogs.s3.amazonaws.com"
-    prefix = "cloudfrontprefix"
-  }
-
-  aliases = ["mysite.example.com", "yoursite.example.com"]
-
   default_cache_behavior {
     allowed_methods = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods = ["GET", "HEAD"]
-    target_origin_id = "${local.s3_origin_id}"
+    target_origin_id = "cloudpatterns-cloudfront"
     
     lambda_function_association {
       event_type = "viewer-request"
