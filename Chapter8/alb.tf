@@ -3,6 +3,7 @@ resource "aws_lb" "lambda-alb" {
   internal           = false
   load_balancer_type = "application"
   subnets            = ["subnet-447dd623","subnet-476f170d"]
+  security_groups    = ["${aws_security_group.alb_sg.id}"]
   
     access_logs {
     bucket  = "${aws_s3_bucket.lb_logs.bucket}"
@@ -11,8 +12,28 @@ resource "aws_lb" "lambda-alb" {
   }
 }
 
-// add security group with public port 80 access
+resource "aws_security_group" "alb_sg" {
+  name        = "alb_sg"
+  description = "Load Balancer port 80"
+//  vpc_id      = "${aws_vpc.main.id}"
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    cidr_blocks     = ["0.0.0.0/0"]
+    prefix_list_ids = ["pl-12c4e678"]
+  }
+}
 // add logging policies
+
 
 resource "aws_lb_listener" "alb_listener" {  
   load_balancer_arn = "${aws_lb.lambda-alb.arn}"  
