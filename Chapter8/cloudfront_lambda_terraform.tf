@@ -26,10 +26,26 @@ resource "aws_iam_role" "iam_for_lambda" {
         "Service": "cloudtrail.amazonaws.com"
       },
       "Action": "sts:AssumeRole"
-    }
+    },
+    {
+            "Effect": "Allow",
+            "Action": [
+                "logs:*"
+            ],
+            "Resource": "arn:aws:logs:*:*:*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject",
+                "s3:PutObject"
+            ],
+            "Resource": "arn:aws:s3:::*"
+        }
   ]
 }
 EOF
+
 }
 
 resource "aws_lambda_permission" "allow_bucket" {

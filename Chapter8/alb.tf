@@ -3,7 +3,16 @@ resource "aws_lb" "lambda-alb" {
   internal           = false
   load_balancer_type = "application"
   subnets            = ["subnet-447dd623","subnet-476f170d"]
+  
+    access_logs {
+    bucket  = "${aws_s3_bucket.lb_logs.bucket}"
+    prefix  = "test-lb"
+    enabled = true
+  }
 }
+
+// add security group with public port 80 access
+// add logging policies
 
 resource "aws_lb_listener" "alb_listener" {  
   load_balancer_arn = "${aws_lb.lambda-alb.arn}"  
