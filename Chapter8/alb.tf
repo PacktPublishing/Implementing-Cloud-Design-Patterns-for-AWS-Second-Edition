@@ -5,11 +5,11 @@ resource "aws_lb" "lambda-alb" {
   subnets            = ["subnet-447dd623","subnet-476f170d"]
   security_groups    = ["${aws_security_group.alb_sg.id}"]
   
-    access_logs {
-    bucket  = "${aws_s3_bucket.lb_logs.bucket}"
-    prefix  = "test-lb"
-    enabled = true
-  }
+//    access_logs {
+//    bucket  = "${aws_s3_bucket.lb_logs.bucket}"
+//    prefix  = "test-lb"
+//    enabled = true
+//  }
 }
 
 resource "aws_security_group" "alb_sg" {
@@ -29,7 +29,6 @@ resource "aws_security_group" "alb_sg" {
     to_port         = 0
     protocol        = "-1"
     cidr_blocks     = ["0.0.0.0/0"]
-    prefix_list_ids = ["pl-12c4e678"]
   }
 }
 // add logging policies
